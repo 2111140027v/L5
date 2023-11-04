@@ -7,9 +7,10 @@ class TopController < ApplicationController
   def login
     user = User.find_by(uid: params[:uid])
     if user != nil
-      login_password = BCrypt::Password.new(signup_password)
-      if login_password == "my password" #←login_password.==(“my password”)
-      redirect_to root_path
+      login_password = BCrypt::Password.new(user.pass)
+      if login_password == params[:pass] #←login_password.==(“my password”)
+        session[:login_uid] = user.uid
+        redirect_to root_path
       else
         render "login"
       end
@@ -17,7 +18,7 @@ class TopController < ApplicationController
   end
   
   def logout
-    session.delet(:login_uid)
+    session.delete(:login_uid)
     redirect_to root_path
   end
 end

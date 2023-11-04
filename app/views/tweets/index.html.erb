@@ -15,5 +15,10 @@
 
 <hr>
 
-<p><%= link_to 'ログイン', top_main_path %></p>
+<% if session[:login_uid] %>
+  <p><%= link_to 'ログアウト', top_logout_path %></p>
+<% else %>
+  <p><%= link_to 'ログイン', top_main_path %></p>
+<% end %>
+
 <p><%= link_to 'ユーザ一覧', users_path %></p>
